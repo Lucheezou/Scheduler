@@ -1,0 +1,22 @@
+daemon off;
+worker_processes auto;
+
+events {
+    use epoll;
+    accept_mutex on;
+    worker_connections 512;
+}
+
+http {
+    server_tokens off;
+    
+    server {
+        listen <%= ENV["PORT"] %>;
+        server_name _;
+        root /app/dist;
+        
+        location / {
+            try_files $uri $uri/ /index.html;
+        }
+    }
+}
