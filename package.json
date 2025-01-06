@@ -4,12 +4,15 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
+    "start": "serve -s dist",
+    "heroku-postbuild": "npm run build",
     "dev": "vite",
     "build": "vite build",
-    "heroku-postbuild": "npm run build",
     "preview": "vite preview --port $PORT --host"
   },
   "dependencies": {
+    "serve": "^14.0.0",
+    "vite": "^5.0.0",
     "@ant-design/icons": "^4.7.0",
     "@radix-ui/react-dialog": "^1.1.4",
     "antd": "^4.24.10",
