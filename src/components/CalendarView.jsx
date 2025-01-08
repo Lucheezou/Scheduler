@@ -15,19 +15,30 @@ const RESOURCES = [
     hasSummary: true,
     expanded: true,
     groupOnly: true,
-    bgColor: '#3B82F6'
+    rowHeight: 40,
+    style: {
+      backgroundColor: '#dbeafe'
+    }
   },
   { 
     id: 'Matin',
     name: 'Matin',
     title: 'Matin',
-    parentId: 'UC'
+    parentId: 'UC',
+    rowHeight: 40,
+    style: {
+      backgroundColor: '#dbeafe'
+    }
   },
   { 
     id: 'A-M',
     name: 'A-M',
     title: 'A-M',
-    parentId: 'UC'
+    parentId: 'UC',
+    rowHeight: 40,
+    style: {
+      backgroundColor: '#dbeafe'
+    }
   },
   { 
     id: 'C2',
@@ -36,7 +47,10 @@ const RESOURCES = [
     hasSummary: true,
     expanded: true,
     groupOnly: true,
-    bgColor: '#F59E0B'
+    rowHeight: 40,
+    style: {
+      backgroundColor: '#fef3c7'
+    }
   },
   { 
     id: 'Cardio',
@@ -45,19 +59,31 @@ const RESOURCES = [
     hasSummary: true,
     expanded: true,
     parentId: 'C2',
-    groupOnly: true
+    groupOnly: true,
+    rowHeight: 40,
+    style: {
+      backgroundColor: '#fef3c7'
+    }
   },
   { 
     id: 'Cardio-Marin',
     name: 'Marin',
     title: 'Marin',
-    parentId: 'Cardio'
+    parentId: 'Cardio',
+    rowHeight: 40,
+    style: {
+      backgroundColor: '#fef3c7'
+    }
   },
   { 
     id: 'Cardio-PM',
     name: 'PM',
     title: 'PM',
-    parentId: 'Cardio'
+    parentId: 'Cardio',
+    rowHeight: 40,
+    style: {
+      backgroundColor: '#fef3c7'
+    }
   },
   { 
     id: 'MG',
@@ -65,25 +91,41 @@ const RESOURCES = [
     title: 'MG',
     expanded: true,
     parentId: 'C2',
-    groupOnly: true
+    groupOnly: true,
+    rowHeight: 40,
+    style: {
+      backgroundColor: '#fef3c7'
+    }
   },
   { 
     id: 'MG-Marin',
     name: 'Marin',
     title: 'Marin',
-    parentId: 'MG'
+    parentId: 'MG',
+    rowHeight: 40,
+    style: {
+      backgroundColor: '#fef3c7'
+    }
   },
   { 
     id: 'MG-PM',
     name: 'PM',
     title: 'PM',
-    parentId: 'MG'
+    parentId: 'MG',
+    rowHeight: 40,
+    style: {
+      backgroundColor: '#fef3c7'
+    }
   },
   { 
     id: 'Post-Gradues',
     name: 'Post-Gradués',
     title: 'Post-Gradués',
-    parentId: 'C2'
+    parentId: 'C2',
+    rowHeight: 40,
+    style: {
+      backgroundColor: '#fef3c7'
+    }
   }
 ];
 
@@ -95,7 +137,9 @@ const INITIAL_EVENTS = [
     resourceId: 'Matin',
     title: 'UC Event',
     bgColor: '#3B82F6',
-    name: 'John Doe'
+    name: 'John Doe',
+    movable: true,
+    resizable: true
   },
   {
     id: 2,
@@ -104,9 +148,23 @@ const INITIAL_EVENTS = [
     resourceId: 'Cardio-Marin',
     title: 'C2 Event',
     bgColor: '#F59E0B',
-    resizable: false,
+    movable: true,
+    resizable: true,
     name: 'Jane Smith'
   }
+];
+
+const DEFAULT_COLORS = [
+  '#3B82F6', // Blue
+  '#F59E0B', // Orange
+  '#10B981', // Green
+  '#EF4444', // Red
+  '#8B5CF6', // Purple
+  '#EC4899', // Pink
+  '#14B8A6', // Teal
+  '#F97316', // Orange
+  '#6366F1', // Indigo
+  '#84CC16'  // Lime
 ];
 
 const CalendarView = () => {
@@ -114,7 +172,7 @@ const CalendarView = () => {
   const [refreshKey, setRefreshKey] = useState(0);
   const [containerHeight, setContainerHeight] = useState(0);
   const [events, setEvents] = useState(INITIAL_EVENTS);
-  const [resources, setResources] = useState(RESOURCES);
+  const [resources] = useState(RESOURCES);
   const [showNewEventDialog, setShowNewEventDialog] = useState(false);
   const [showViewEventDialog, setShowViewEventDialog] = useState(false);
   const [showEditEventDialog, setShowEditEventDialog] = useState(false);
@@ -125,7 +183,9 @@ const CalendarView = () => {
     end: '',
     resourceId: 'Matin',
     bgColor: '#3B82F6',
-    name: ''
+    name: '',
+    movable: true,
+    resizable: true
   });
 
   useEffect(() => {
@@ -165,6 +225,8 @@ const CalendarView = () => {
         eventItemLineHeight: 36,
         monthMaxEvents: 99,
         weekMaxEvents: 99,
+        movable: true,
+        resizable: true,
         views: [
           { viewId: 1, viewName: 'Week', viewType: ViewType.Week },
           { viewId: 2, viewName: 'Month', viewType: ViewType.Month }
@@ -183,6 +245,22 @@ const CalendarView = () => {
     schedulerData.setEvents(events);
     setViewModel(schedulerData);
   };
+
+  const ColorPicker = ({ value = '#3B82F6', onChange }) => (
+    <div className="flex flex-wrap gap-2 mt-2">
+      {DEFAULT_COLORS.map((color) => (
+        <button
+          key={color}
+          onClick={() => onChange(color)}
+          className={`w-8 h-8 rounded-full border-2 ${
+            value === color ? 'border-gray-900' : 'border-transparent'
+          }`}
+          style={{ backgroundColor: color }}
+          aria-label={`Select color ${color}`}
+        />
+      ))}
+    </div>
+  );
 
   const toggleResourceCollapse = (schedulerData, item) => {
     schedulerData.toggleExpandStatus(item);
@@ -222,6 +300,92 @@ const CalendarView = () => {
     setRefreshKey(prev => prev + 1);
   };
 
+  const [showConfirmDialog, setShowConfirmDialog] = useState(false);
+  const [confirmAction, setConfirmAction] = useState(null);
+  const [confirmMessage, setConfirmMessage] = useState('');
+
+  const handleConfirmAction = () => {
+    if (confirmAction) {
+      confirmAction();
+    }
+    setShowConfirmDialog(false);
+  };
+
+  const updateEventStart = (schedulerData, event, newStart) => {
+    setConfirmMessage(`Update the start time for "${event.title}" to ${dayjs(newStart).format('MMM D, YYYY h:mm A')}?`);
+    setConfirmAction(() => () => {
+      const updatedEvents = events.map(e => {
+        if (e.id === event.id) {
+          return {
+            ...e,
+            start: newStart
+          };
+        }
+        return e;
+      });
+      
+      setEvents(updatedEvents);
+      schedulerData.updateEventStart(event, newStart);
+      schedulerData.setEvents(updatedEvents);
+      schedulerData.setResources(resources);
+      setViewModel(schedulerData);
+      setRefreshKey(prev => prev + 1);
+    });
+    setShowConfirmDialog(true);
+  };
+
+  const updateEventEnd = (schedulerData, event, newEnd) => {
+    setConfirmMessage(`Update the end time for "${event.title}" to ${dayjs(newEnd).format('MMM D, YYYY h:mm A')}?`);
+    setConfirmAction(() => () => {
+      const updatedEvents = events.map(e => {
+        if (e.id === event.id) {
+          return {
+            ...e,
+            end: newEnd
+          };
+        }
+        return e;
+      });
+      
+      setEvents(updatedEvents);
+      schedulerData.updateEventEnd(event, newEnd);
+      schedulerData.setEvents(updatedEvents);
+      schedulerData.setResources(resources);
+      setViewModel(schedulerData);
+      setRefreshKey(prev => prev + 1);
+    });
+    setShowConfirmDialog(true);
+  };
+
+  const moveEvent = (schedulerData, event, slotId, slotName, start, end) => {
+    const targetResource = resources.find(r => r.id === slotId)?.name;
+    setConfirmMessage(
+      `Move "${event.title}" to ${targetResource}?\n` +
+      `New time: ${dayjs(start).format('MMM D, YYYY h:mm A')} - ${dayjs(end).format('MMM D, YYYY h:mm A')}`
+    );
+    setConfirmAction(() => () => {
+      const updatedEvents = events.map(e => {
+        if (e.id === event.id) {
+          return {
+            ...e,
+            resourceId: slotId,
+            start: start,
+            end: end
+          };
+        }
+        return e;
+      });
+      
+      setEvents(updatedEvents);
+      schedulerData.moveEvent(event, slotId, slotName, start, end);
+      schedulerData.setEvents(updatedEvents);
+      schedulerData.setResources(resources);
+      setViewModel(schedulerData);
+      setRefreshKey(prev => prev + 1);
+    });
+    setShowConfirmDialog(true);
+  };
+
   const handleViewEvent = (schedulerData, event) => {
     setSelectedEvent(event);
     setShowViewEventDialog(true);
@@ -247,17 +411,16 @@ const CalendarView = () => {
     setShowEditEventDialog(false);
   };
 
-  const handleNewEvent = (schedulerData, slotId, slotName, start, end) => {
-    const resource = resources.find(r => r.id === slotId);
-    const parentColor = resource?.parentId === 'UC' ? '#3B82F6' : '#F59E0B';
-    
+  const handleNewEvent = (schedulerData, slotId, slotName, start, end, type, item) => {
     setNewEventData({
       title: '',
       start: dayjs(start).format('YYYY-MM-DD HH:mm:ss'),
       end: dayjs(end).format('YYYY-MM-DD HH:mm:ss'),
       resourceId: slotId,
-      bgColor: parentColor,
-      name: ''
+      bgColor: DEFAULT_COLORS[0],
+      name: '',
+      movable: true,
+      resizable: true
     });
     setShowNewEventDialog(true);
   };
@@ -279,7 +442,9 @@ const CalendarView = () => {
       end: '',
       resourceId: 'Matin',
       bgColor: '#3B82F6',
-      name: ''
+      name: '',
+      movable: true,
+      resizable: true
     });
   };
 
@@ -307,6 +472,9 @@ const CalendarView = () => {
             viewEvent2Click={handleEditEvent}
             viewEvent2Text="Edit"
             newEvent={handleNewEvent}
+            moveEvent={moveEvent}
+            updateEventStart={updateEventStart}
+            updateEventEnd={updateEventEnd}
           />
         </DndProvider>
       </div>
@@ -465,6 +633,16 @@ const CalendarView = () => {
                   />
                 </div>
               </div>
+
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">
+                  Event Color
+                </label>
+                <ColorPicker
+                  value={selectedEvent.bgColor}
+                  onChange={(color) => setSelectedEvent({...selectedEvent, bgColor: color})}
+                />
+              </div>
             </div>
 
             <div className="mt-6 flex justify-between">
@@ -590,6 +768,16 @@ const CalendarView = () => {
                   />
                 </div>
               </div>
+
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">
+                  Event Color
+                </label>
+                <ColorPicker
+                  value={newEventData.bgColor}
+                  onChange={(color) => setNewEventData({...newEventData, bgColor: color})}
+                />
+              </div>
             </div>
 
             <div className="mt-6 flex justify-end space-x-3">
@@ -606,6 +794,33 @@ const CalendarView = () => {
               >
                 Create Event
               </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Confirmation Dialog */}
+      {showConfirmDialog && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+          <div className="bg-white rounded-lg p-6 w-full max-w-md">
+            <div className="space-y-4">
+              <h2 className="text-xl font-bold">Confirm Action</h2>
+              <p className="text-gray-600 whitespace-pre-line">{confirmMessage}</p>
+              
+              <div className="flex justify-end space-x-3 pt-4">
+                <button
+                  onClick={() => setShowConfirmDialog(false)}
+                  className="px-4 py-2 text-gray-600 hover:text-gray-800"
+                >
+                  Cancel
+                </button>
+                <button
+                  onClick={handleConfirmAction}
+                  className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700"
+                >
+                  Confirm
+                </button>
+              </div>
             </div>
           </div>
         </div>

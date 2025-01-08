@@ -15,19 +15,30 @@ const RESOURCES = [
     hasSummary: true,
     expanded: true,
     groupOnly: true,
-    bgColor: '#3B82F6'
+    rowHeight: 40,
+    style: {
+      backgroundColor: '#dbeafe' // light blue background
+    }
   },
   { 
     id: 'Matin',
     name: 'Matin',
     title: 'Matin',
-    parentId: 'UC'
+    parentId: 'UC',
+    rowHeight: 40,
+    style: {
+      backgroundColor: '#dbeafe'
+    }
   },
   { 
     id: 'A-M',
     name: 'A-M',
     title: 'A-M',
-    parentId: 'UC'
+    parentId: 'UC',
+    rowHeight: 40,
+    style: {
+      backgroundColor: '#dbeafe'
+    }
   },
   { 
     id: 'C2',
@@ -36,7 +47,10 @@ const RESOURCES = [
     hasSummary: true,
     expanded: true,
     groupOnly: true,
-    bgColor: '#F59E0B'
+    rowHeight: 40,
+    style: {
+      backgroundColor: '#fef3c7' // light orange background
+    }
   },
   { 
     id: 'Cardio',
@@ -45,19 +59,31 @@ const RESOURCES = [
     hasSummary: true,
     expanded: true,
     parentId: 'C2',
-    groupOnly: true
+    groupOnly: true,
+    rowHeight: 40,
+    style: {
+      backgroundColor: '#fef3c7'
+    }
   },
   { 
     id: 'Cardio-Marin',
     name: 'Marin',
     title: 'Marin',
-    parentId: 'Cardio'
+    parentId: 'Cardio',
+    rowHeight: 40,
+    style: {
+      backgroundColor: '#fef3c7'
+    }
   },
   { 
     id: 'Cardio-PM',
     name: 'PM',
     title: 'PM',
-    parentId: 'Cardio'
+    parentId: 'Cardio',
+    rowHeight: 40,
+    style: {
+      backgroundColor: '#fef3c7'
+    }
   },
   { 
     id: 'MG',
@@ -65,25 +91,41 @@ const RESOURCES = [
     title: 'MG',
     expanded: true,
     parentId: 'C2',
-    groupOnly: true
+    groupOnly: true,
+    rowHeight: 40,
+    style: {
+      backgroundColor: '#fef3c7'
+    }
   },
   { 
     id: 'MG-Marin',
     name: 'Marin',
     title: 'Marin',
-    parentId: 'MG'
+    parentId: 'MG',
+    rowHeight: 40,
+    style: {
+      backgroundColor: '#fef3c7'
+    }
   },
   { 
     id: 'MG-PM',
     name: 'PM',
     title: 'PM',
-    parentId: 'MG'
+    parentId: 'MG',
+    rowHeight: 40,
+    style: {
+      backgroundColor: '#fef3c7'
+    }
   },
   { 
     id: 'Post-Gradues',
     name: 'Post-Gradués',
     title: 'Post-Gradués',
-    parentId: 'C2'
+    parentId: 'C2',
+    rowHeight: 40,
+    style: {
+      backgroundColor: '#fef3c7'
+    }
   }
 ];
 
@@ -109,12 +151,25 @@ const INITIAL_EVENTS = [
   }
 ];
 
+const DEFAULT_COLORS = [
+  '#3B82F6', // Blue
+  '#F59E0B', // Orange
+  '#10B981', // Green
+  '#EF4444', // Red
+  '#8B5CF6', // Purple
+  '#EC4899', // Pink
+  '#14B8A6', // Teal
+  '#F97316', // Orange
+  '#6366F1', // Indigo
+  '#84CC16'  // Lime
+];
+
 const CalendarView = () => {
   const [viewModel, setViewModel] = useState(null);
   const [refreshKey, setRefreshKey] = useState(0);
   const [containerHeight, setContainerHeight] = useState(0);
   const [events, setEvents] = useState(INITIAL_EVENTS);
-  const [resources, setResources] = useState(RESOURCES);
+  const [resources] = useState(RESOURCES);
   const [showNewEventDialog, setShowNewEventDialog] = useState(false);
   const [showViewEventDialog, setShowViewEventDialog] = useState(false);
   const [showEditEventDialog, setShowEditEventDialog] = useState(false);
@@ -184,6 +239,22 @@ const CalendarView = () => {
     setViewModel(schedulerData);
   };
 
+  const ColorPicker = ({ value = '#3B82F6', onChange }) => (
+    <div className="flex flex-wrap gap-2 mt-2">
+      {DEFAULT_COLORS.map((color) => (
+        <button
+          key={color}
+          onClick={() => onChange(color)}
+          className={`w-8 h-8 rounded-full border-2 ${
+            value === color ? 'border-gray-900' : 'border-transparent'
+          }`}
+          style={{ backgroundColor: color }}
+          aria-label={`Select color ${color}`}
+        />
+      ))}
+    </div>
+  );
+
   const toggleResourceCollapse = (schedulerData, item) => {
     schedulerData.toggleExpandStatus(item);
     setViewModel(schedulerData);
@@ -248,15 +319,12 @@ const CalendarView = () => {
   };
 
   const handleNewEvent = (schedulerData, slotId, slotName, start, end) => {
-    const resource = resources.find(r => r.id === slotId);
-    const parentColor = resource?.parentId === 'UC' ? '#3B82F6' : '#F59E0B';
-    
     setNewEventData({
       title: '',
       start: dayjs(start).format('YYYY-MM-DD HH:mm:ss'),
       end: dayjs(end).format('YYYY-MM-DD HH:mm:ss'),
       resourceId: slotId,
-      bgColor: parentColor,
+      bgColor: DEFAULT_COLORS[0], // Start with the first color from our color palette
       name: ''
     });
     setShowNewEventDialog(true);
@@ -465,7 +533,20 @@ const CalendarView = () => {
                   />
                 </div>
               </div>
+
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">
+                  Event Color
+                </label>
+                <ColorPicker
+                  value={selectedEvent.bgColor}
+                  onChange={(color) => setSelectedEvent({...selectedEvent, bgColor: color})}
+                />
+              </div>
             </div>
+
+             
+            
 
             <div className="mt-6 flex justify-between">
               <button
@@ -590,7 +671,18 @@ const CalendarView = () => {
                   />
                 </div>
               </div>
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">
+                  Event Color
+                </label>
+                <ColorPicker
+  value={newEventData.bgColor}
+  onChange={(color) => setNewEventData({...newEventData, bgColor: color})}  // Correct version
+/>
+              </div>
             </div>
+
+         
 
             <div className="mt-6 flex justify-end space-x-3">
               <button
