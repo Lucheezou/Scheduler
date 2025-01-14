@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Menu, X, Calendar, Home, Settings, Users, HelpCircle } from 'lucide-react';
+import { Menu, X, Calendar, Home, Settings, Users, HelpCircle, Clock } from 'lucide-react';
 import CalendarView from './CalendarView';
 
 const DashboardLayout = () => {
@@ -21,6 +21,7 @@ const DashboardLayout = () => {
   const navigationItems = [
     { name: 'Home', icon: <Home className="w-5 h-5" />, view: 'dashboard' },
     { name: 'Calendar', icon: <Calendar className="w-5 h-5" />, view: 'calendar' },
+    { name: 'Time-Off', icon: <Clock className="w-5 h-5" />, view: 'time-off' },
     { name: 'Users', icon: <Users className="w-5 h-5" />, view: 'users' },
     { name: 'Settings', icon: <Settings className="w-5 h-5" />, view: 'settings' },
     { name: 'Help', icon: <HelpCircle className="w-5 h-5" />, view: 'help' }
@@ -84,7 +85,7 @@ const DashboardLayout = () => {
             )}
             <div className="flex items-center gap-2">
               <div className="w-8 h-8 bg-blue-600 rounded-lg"></div>
-              <span className="text-xl font-bold text-gray-900">Your Brand</span>
+              <span className="text-xl font-bold text-gray-900">Cardiologie - CHU de Charleroi</span>
             </div>
           </div>
         </div>

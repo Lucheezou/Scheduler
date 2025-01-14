@@ -17,7 +17,7 @@ const RESOURCES = [
     groupOnly: true,
     rowHeight: 40,
     style: {
-      backgroundColor: '#dbeafe' // light blue background
+      backgroundColor: '#dbeafe'
     }
   },
   { 
@@ -31,9 +31,9 @@ const RESOURCES = [
     }
   },
   { 
-    id: 'A-M',
-    name: 'A-M',
-    title: 'A-M',
+    id: 'PM',
+    name: 'PM',
+    title: 'PM',
     parentId: 'UC',
     rowHeight: 40,
     style: {
@@ -49,7 +49,7 @@ const RESOURCES = [
     groupOnly: true,
     rowHeight: 40,
     style: {
-      backgroundColor: '#fef3c7' // light orange background
+      backgroundColor: '#fef3c7'
     }
   },
   { 
@@ -66,9 +66,9 @@ const RESOURCES = [
     }
   },
   { 
-    id: 'Cardio-Marin',
-    name: 'Marin',
-    title: 'Marin',
+    id: 'Cardio-Matin',
+    name: 'Matin',
+    title: 'Matin',
     parentId: 'Cardio',
     rowHeight: 40,
     style: {
@@ -98,9 +98,9 @@ const RESOURCES = [
     }
   },
   { 
-    id: 'MG-Marin',
-    name: 'Marin',
-    title: 'Marin',
+    id: 'MG-Matin',
+    name: 'Matin',
+    title: 'Matin',
     parentId: 'MG',
     rowHeight: 40,
     style: {
@@ -137,16 +137,19 @@ const INITIAL_EVENTS = [
     resourceId: 'Matin',
     title: 'UC Event',
     bgColor: '#3B82F6',
-    name: 'John Doe'
+    name: 'John Doe',
+    movable: true,
+    resizable: true
   },
   {
     id: 2,
     start: '2025-12-18 12:30:00',
     end: '2025-12-26 23:30:00',
-    resourceId: 'Cardio-Marin',
+    resourceId: 'Cardio-Matin',
     title: 'C2 Event',
     bgColor: '#F59E0B',
-    resizable: false,
+    movable: true,
+    resizable: true,
     name: 'Jane Smith'
   }
 ];
@@ -180,7 +183,9 @@ const CalendarView = () => {
     end: '',
     resourceId: 'Matin',
     bgColor: '#3B82F6',
-    name: ''
+    name: '',
+    movable: true,
+    resizable: true
   });
 
   useEffect(() => {
@@ -220,13 +225,15 @@ const CalendarView = () => {
         eventItemLineHeight: 36,
         monthMaxEvents: 99,
         weekMaxEvents: 99,
+        movable: true,
+        resizable: true,
         views: [
           { viewId: 1, viewName: 'Week', viewType: ViewType.Week },
           { viewId: 2, viewName: 'Month', viewType: ViewType.Month }
         ],
         displayWeekend: true,
         headerEnabled: true,
-        resourceName: 'Resource',
+        resourceName: 'Postes',
         taskName: 'Task',
         enableIntegratedPopover: true,
         eventItemPopoverEnabled: true
@@ -293,6 +300,92 @@ const CalendarView = () => {
     setRefreshKey(prev => prev + 1);
   };
 
+  const [showConfirmDialog, setShowConfirmDialog] = useState(false);
+  const [confirmAction, setConfirmAction] = useState(null);
+  const [confirmMessage, setConfirmMessage] = useState('');
+
+  const handleConfirmAction = () => {
+    if (confirmAction) {
+      confirmAction();
+    }
+    setShowConfirmDialog(false);
+  };
+
+  const updateEventStart = (schedulerData, event, newStart) => {
+    setConfirmMessage(`Update the start time for "${event.title}" to ${dayjs(newStart).format('MMM D, YYYY h:mm A')}?`);
+    setConfirmAction(() => () => {
+      const updatedEvents = events.map(e => {
+        if (e.id === event.id) {
+          return {
+            ...e,
+            start: newStart
+          };
+        }
+        return e;
+      });
+      
+      setEvents(updatedEvents);
+      schedulerData.updateEventStart(event, newStart);
+      schedulerData.setEvents(updatedEvents);
+      schedulerData.setResources(resources);
+      setViewModel(schedulerData);
+      setRefreshKey(prev => prev + 1);
+    });
+    setShowConfirmDialog(true);
+  };
+
+  const updateEventEnd = (schedulerData, event, newEnd) => {
+    setConfirmMessage(`Update the end time for "${event.title}" to ${dayjs(newEnd).format('MMM D, YYYY h:mm A')}?`);
+    setConfirmAction(() => () => {
+      const updatedEvents = events.map(e => {
+        if (e.id === event.id) {
+          return {
+            ...e,
+            end: newEnd
+          };
+        }
+        return e;
+      });
+      
+      setEvents(updatedEvents);
+      schedulerData.updateEventEnd(event, newEnd);
+      schedulerData.setEvents(updatedEvents);
+      schedulerData.setResources(resources);
+      setViewModel(schedulerData);
+      setRefreshKey(prev => prev + 1);
+    });
+    setShowConfirmDialog(true);
+  };
+
+  const moveEvent = (schedulerData, event, slotId, slotName, start, end) => {
+    const targetResource = resources.find(r => r.id === slotId)?.name;
+    setConfirmMessage(
+      `Move "${event.title}" to ${targetResource}?\n` +
+      `New time: ${dayjs(start).format('MMM D, YYYY h:mm A')} - ${dayjs(end).format('MMM D, YYYY h:mm A')}`
+    );
+    setConfirmAction(() => () => {
+      const updatedEvents = events.map(e => {
+        if (e.id === event.id) {
+          return {
+            ...e,
+            resourceId: slotId,
+            start: start,
+            end: end
+          };
+        }
+        return e;
+      });
+      
+      setEvents(updatedEvents);
+      schedulerData.moveEvent(event, slotId, slotName, start, end);
+      schedulerData.setEvents(updatedEvents);
+      schedulerData.setResources(resources);
+      setViewModel(schedulerData);
+      setRefreshKey(prev => prev + 1);
+    });
+    setShowConfirmDialog(true);
+  };
+
   const handleViewEvent = (schedulerData, event) => {
     setSelectedEvent(event);
     setShowViewEventDialog(true);
@@ -318,14 +411,16 @@ const CalendarView = () => {
     setShowEditEventDialog(false);
   };
 
-  const handleNewEvent = (schedulerData, slotId, slotName, start, end) => {
+  const handleNewEvent = (schedulerData, slotId, slotName, start, end, type, item) => {
     setNewEventData({
       title: '',
       start: dayjs(start).format('YYYY-MM-DD HH:mm:ss'),
       end: dayjs(end).format('YYYY-MM-DD HH:mm:ss'),
       resourceId: slotId,
-      bgColor: DEFAULT_COLORS[0], // Start with the first color from our color palette
-      name: ''
+      bgColor: DEFAULT_COLORS[0],
+      name: '',
+      movable: true,
+      resizable: true
     });
     setShowNewEventDialog(true);
   };
@@ -347,7 +442,9 @@ const CalendarView = () => {
       end: '',
       resourceId: 'Matin',
       bgColor: '#3B82F6',
-      name: ''
+      name: '',
+      movable: true,
+      resizable: true
     });
   };
 
@@ -375,6 +472,9 @@ const CalendarView = () => {
             viewEvent2Click={handleEditEvent}
             viewEvent2Text="Edit"
             newEvent={handleNewEvent}
+            moveEvent={moveEvent}
+            updateEventStart={updateEventStart}
+            updateEventEnd={updateEventEnd}
           />
         </DndProvider>
       </div>
@@ -545,9 +645,6 @@ const CalendarView = () => {
               </div>
             </div>
 
-             
-            
-
             <div className="mt-6 flex justify-between">
               <button
                 onClick={handleDeleteEvent}
@@ -671,18 +768,17 @@ const CalendarView = () => {
                   />
                 </div>
               </div>
+
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1">
                   Event Color
                 </label>
                 <ColorPicker
-  value={newEventData.bgColor}
-  onChange={(color) => setNewEventData({...newEventData, bgColor: color})}  // Correct version
-/>
+                  value={newEventData.bgColor}
+                  onChange={(color) => setNewEventData({...newEventData, bgColor: color})}
+                />
               </div>
             </div>
-
-         
 
             <div className="mt-6 flex justify-end space-x-3">
               <button
@@ -698,6 +794,33 @@ const CalendarView = () => {
               >
                 Create Event
               </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Confirmation Dialog */}
+      {showConfirmDialog && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+          <div className="bg-white rounded-lg p-6 w-full max-w-md">
+            <div className="space-y-4">
+              <h2 className="text-xl font-bold">Confirm Action</h2>
+              <p className="text-gray-600 whitespace-pre-line">{confirmMessage}</p>
+              
+              <div className="flex justify-end space-x-3 pt-4">
+                <button
+                  onClick={() => setShowConfirmDialog(false)}
+                  className="px-4 py-2 text-gray-600 hover:text-gray-800"
+                >
+                  Cancel
+                </button>
+                <button
+                  onClick={handleConfirmAction}
+                  className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700"
+                >
+                  Confirm
+                </button>
+              </div>
             </div>
           </div>
         </div>

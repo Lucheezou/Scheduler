@@ -31,9 +31,9 @@ const RESOURCES = [
     }
   },
   { 
-    id: 'A-M',
-    name: 'A-M',
-    title: 'A-M',
+    id: 'PM',
+    name: 'PM',
+    title: 'PM',
     parentId: 'UC',
     rowHeight: 40,
     style: {
@@ -66,9 +66,9 @@ const RESOURCES = [
     }
   },
   { 
-    id: 'Cardio-Marin',
-    name: 'Marin',
-    title: 'Marin',
+    id: 'Cardio-Matin',
+    name: 'Matin',
+    title: 'Matin',
     parentId: 'Cardio',
     rowHeight: 40,
     style: {
@@ -98,9 +98,9 @@ const RESOURCES = [
     }
   },
   { 
-    id: 'MG-Marin',
-    name: 'Marin',
-    title: 'Marin',
+    id: 'MG-Matin',
+    name: 'Matin',
+    title: 'Matin',
     parentId: 'MG',
     rowHeight: 40,
     style: {
@@ -145,7 +145,7 @@ const INITIAL_EVENTS = [
     id: 2,
     start: '2025-12-18 12:30:00',
     end: '2025-12-26 23:30:00',
-    resourceId: 'Cardio-Marin',
+    resourceId: 'Cardio-Matin',
     title: 'C2 Event',
     bgColor: '#F59E0B',
     movable: true,
@@ -168,6 +168,40 @@ const DEFAULT_COLORS = [
 ];
 
 const CalendarView = () => {
+  useEffect(() => {
+    const style = document.createElement('style');
+    style.textContent = `
+      /* UC and its subcategories */
+      td[data-resource-id="UC"] .slot-text,
+      td[data-resource-id="Matin"] .slot-text,
+      td[data-resource-id="PM"] .slot-text {
+        color: #F97316 !important;
+      }
+
+      /* C2 and its subcategories */
+      td[data-resource-id="C2"] .slot-text,
+      td[data-resource-id="Cardio"] .slot-text,
+      td[data-resource-id="Cardio-Matin"] .slot-text,
+      td[data-resource-id="Cardio-PM"] .slot-text,
+      td[data-resource-id="MG"] .slot-text,
+      td[data-resource-id="MG-Matin"] .slot-text,
+      td[data-resource-id="MG-PM"] .slot-text,
+      td[data-resource-id="Post-Gradues"] .slot-text {
+        color: #3B82F6 !important;
+      }
+
+      /* Make sure icons also change color */
+      td[data-resource-id="UC"] .anticon svg,
+      td[data-resource-id="C2"] .anticon svg,
+      td[data-resource-id="Cardio"] .anticon svg,
+      td[data-resource-id="MG"] .anticon svg {
+        fill: currentColor !important;
+      }
+    `;
+    document.head.appendChild(style);
+    return () => document.head.removeChild(style);
+  }, []);
+
   const [viewModel, setViewModel] = useState(null);
   const [refreshKey, setRefreshKey] = useState(0);
   const [containerHeight, setContainerHeight] = useState(0);
@@ -233,7 +267,7 @@ const CalendarView = () => {
         ],
         displayWeekend: true,
         headerEnabled: true,
-        resourceName: 'Resource',
+        resourceName: 'Postes',
         taskName: 'Task',
         enableIntegratedPopover: true,
         eventItemPopoverEnabled: true
