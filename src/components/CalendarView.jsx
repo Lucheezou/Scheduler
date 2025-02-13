@@ -7,7 +7,7 @@ import { X } from 'lucide-react';
 import 'antd/dist/antd.css';
 import 'react-big-schedule/dist/css/style.css';
 
-const RESOURCES = [
+const MARIE_CURIE_RESOURCES = [
   { 
     id: 'UC',
     name: 'UC',
@@ -122,9 +122,274 @@ const RESOURCES = [
     name: 'Post-Gradués',
     title: 'Post-Gradués',
     parentId: 'C2',
+    expanded: true,
+    groupOnly: true,
     rowHeight: 40,
     style: {
       backgroundColor: '#fef3c7'
+    }
+  },
+  { 
+    id: 'Post-Gradues-Matin',
+    name: 'Matin',
+    title: 'Matin',
+    parentId: 'Post-Gradues',
+    rowHeight: 40,
+    style: {
+      backgroundColor: '#fee2e2'
+    }
+  },
+  { 
+    id: 'Post-Gradues-PM',
+    name: 'PM',
+    title: 'PM',
+    parentId: 'Post-Gradues',
+    rowHeight: 40,
+    style: {
+      backgroundColor: '#fee2e2'
+    }
+  }
+];
+
+const VESALE_RESOURCES = [
+  { 
+    id: 'UC-vesale',
+    name: 'UC',
+    title: 'UC',
+    hasSummary: true,
+    expanded: true,
+    groupOnly: true,
+    rowHeight: 40,
+    style: {
+      backgroundColor: '#dbeafe'
+    }
+  },
+  { 
+    id: 'Matin-vesale',
+    name: 'Matin',
+    title: 'Matin',
+    parentId: 'UC-vesale',  // Fixed parentId reference
+    rowHeight: 40,
+    style: {
+      backgroundColor: '#dbeafe'
+    }
+  },
+  { 
+    id: 'PM-vesale',
+    name: 'PM',
+    title: 'PM',
+    parentId: 'UC-vesale',  // Fixed parentId reference
+    rowHeight: 40,
+    style: {
+      backgroundColor: '#dbeafe'
+    }
+  },
+  { 
+    id: 'C2-vesale',
+    name: 'C2',
+    title: 'C2',
+    hasSummary: true,
+    expanded: true,
+    groupOnly: true,
+    rowHeight: 40,
+    style: {
+      backgroundColor: '#fef3c7'
+    }
+  },
+  { 
+    id: 'Cardio-vesale',
+    name: 'Cardio',
+    title: 'Cardio',
+    hasSummary: true,
+    expanded: true,
+    parentId: 'C2-vesale',  // Fixed parentId reference
+    groupOnly: true,
+    rowHeight: 40,
+    style: {
+      backgroundColor: '#fef3c7'
+    }
+  },
+  { 
+    id: 'Cardio-Matin-vesale',
+    name: 'Matin',
+    title: 'Matin',
+    parentId: 'Cardio-vesale',  // Fixed parentId reference
+    rowHeight: 40,
+    style: {
+      backgroundColor: '#fef3c7'
+    }
+  },
+  { 
+    id: 'Cardio-PM-vesale',
+    name: 'PM',
+    title: 'PM',
+    parentId: 'Cardio-vesale',  // Fixed parentId reference
+    rowHeight: 40,
+    style: {
+      backgroundColor: '#fef3c7'
+    }
+  },
+  { 
+    id: 'MG-vesale',
+    name: 'MG',
+    title: 'MG',
+    expanded: true,
+    parentId: 'C2-vesale',  // Fixed parentId reference
+    groupOnly: true,
+    rowHeight: 40,
+    style: {
+      backgroundColor: '#fef3c7'
+    }
+  },
+  { 
+    id: 'MG-Matin-vesale',
+    name: 'Matin',
+    title: 'Matin',
+    parentId: 'MG-vesale',  // Fixed parentId reference
+    rowHeight: 40,
+    style: {
+      backgroundColor: '#fef3c7'
+    }
+  },
+  { 
+    id: 'MG-PM-vesale',
+    name: 'PM',
+    title: 'PM',
+    parentId: 'MG-vesale',  // Fixed parentId reference
+    rowHeight: 40,
+    style: {
+      backgroundColor: '#fef3c7'
+    }
+  },
+  { 
+    id: 'Post-Gradues-vesale',
+    name: 'Post-Gradués',
+    title: 'Post-Gradués',
+    parentId: 'C2-vesale',  // Fixed parentId reference
+    expanded: true,
+    groupOnly: true,
+    rowHeight: 40,
+    style: {
+      backgroundColor: '#fef3c7'
+    }
+  },
+  { 
+    id: 'Post-Gradues-Matin-vesale',
+    name: 'Matin',
+    title: 'Matin',
+    parentId: 'Post-Gradues-vesale',  // Fixed parentId reference
+    rowHeight: 40,
+    style: {
+      backgroundColor: '#fee2e2'
+    }
+  },
+  { 
+    id: 'Post-Gradues-PM-vesale',
+    name: 'PM',
+    title: 'PM',
+    parentId: 'Post-Gradues-vesale',  // Fixed parentId reference
+    rowHeight: 40,
+    style: {
+      backgroundColor: '#fee2e2'
+    }
+  }
+];
+
+const DOCTOR_RESOURCES = [
+  { 
+    id: 'IC-doctor',
+    name: 'IC',
+    title: 'IC',
+    hasSummary: true,
+    expanded: true,
+    groupOnly: true,
+    rowHeight: 40,
+    style: {
+      backgroundColor: '#dbeafe'
+    }
+  },
+  { 
+    id: 'Matin-doctor',
+    name: 'Matin',
+    title: 'Matin',
+    parentId: 'IC-doctor',  // Changed from UC to IC
+    rowHeight: 40,
+    style: {
+      backgroundColor: '#dbeafe'
+    }
+  },
+  { 
+    id: 'PM-doctor',
+    name: 'PM',
+    title: 'PM',
+    parentId: 'IC-doctor',  // Changed from UC to IC
+    rowHeight: 40,
+    style: {
+      backgroundColor: '#dbeafe'
+    }
+  },
+  { 
+    id: 'AA-doctor',
+    name: 'AA',
+    title: 'AA',
+    hasSummary: true,
+    expanded: true,
+    groupOnly: true,
+    rowHeight: 40,
+    style: {
+      backgroundColor: '#fef3c7'
+    }
+  },
+  { 
+    id: 'AA-Matin-doctor',
+    name: 'Matin',
+    title: 'Matin',
+    parentId: 'AA-doctor',  // Under AA
+    rowHeight: 40,
+    style: {
+      backgroundColor: '#fef3c7'
+    }
+  },
+  { 
+    id: 'AA-PM-doctor',
+    name: 'PM',
+    title: 'PM',
+    parentId: 'AA-doctor',  // Under AA
+    rowHeight: 40,
+    style: {
+      backgroundColor: '#fef3c7'
+    }
+  },
+  { 
+    id: 'Post-Gradues-doctor',
+    name: 'Post-Gradués',
+    title: 'Post-Gradués',
+    parentId: 'AA-doctor',  // Changed parent to AA
+    expanded: true,
+    groupOnly: true,
+    rowHeight: 40,
+    style: {
+      backgroundColor: '#fef3c7'
+    }
+  },
+  { 
+    id: 'Post-Gradues-Matin-doctor',
+    name: 'Matin',
+    title: 'Matin',
+    parentId: 'Post-Gradues-doctor',
+    rowHeight: 40,
+    style: {
+      backgroundColor: '#fee2e2'
+    }
+  },
+  { 
+    id: 'Post-Gradues-PM-doctor',
+    name: 'PM',
+    title: 'PM',
+    parentId: 'Post-Gradues-doctor',
+    rowHeight: 40,
+    style: {
+      backgroundColor: '#fee2e2'
     }
   }
 ];
@@ -167,55 +432,72 @@ const DEFAULT_COLORS = [
   '#84CC16'  // Lime
 ];
 
-const CalendarView = () => {
-  useEffect(() => {
-    const style = document.createElement('style');
-    style.textContent = `
-      /* UC and its subcategories */
-      td[data-resource-id="UC"] .slot-text,
-      td[data-resource-id="Matin"] .slot-text,
-      td[data-resource-id="PM"] .slot-text {
-        color: #F97316 !important;
-      }
+const ColorPicker = ({ value = '#3B82F6', onChange }) => (
+  <div className="flex flex-wrap gap-2 mt-2">
+    {DEFAULT_COLORS.map((color) => (
+      <button
+        key={color}
+        onClick={() => onChange(color)}
+        className={`w-8 h-8 rounded-full border-2 ${
+          value === color ? 'border-gray-900' : 'border-transparent'
+        }`}
+        style={{ backgroundColor: color }}
+        aria-label={`Select color ${color}`}
+      />
+    ))}
+  </div>
+);
 
-      /* C2 and its subcategories */
-      td[data-resource-id="C2"] .slot-text,
-      td[data-resource-id="Cardio"] .slot-text,
-      td[data-resource-id="Cardio-Matin"] .slot-text,
-      td[data-resource-id="Cardio-PM"] .slot-text,
-      td[data-resource-id="MG"] .slot-text,
-      td[data-resource-id="MG-Matin"] .slot-text,
-      td[data-resource-id="MG-PM"] .slot-text,
-      td[data-resource-id="Post-Gradues"] .slot-text {
-        color: #3B82F6 !important;
-      }
+const CalendarView = ({ calendar = 'marie-curie' }) => {
 
-      /* Make sure icons also change color */
-      td[data-resource-id="UC"] .anticon svg,
-      td[data-resource-id="C2"] .anticon svg,
-      td[data-resource-id="Cardio"] .anticon svg,
-      td[data-resource-id="MG"] .anticon svg {
-        fill: currentColor !important;
-      }
-    `;
-    document.head.appendChild(style);
-    return () => document.head.removeChild(style);
-  }, []);
+  const initializeEvents = () => {
+    const storedMarieCurieEvents = localStorage.getItem('marieCurieEvents');
+    const storedVesaleEvents = localStorage.getItem('vesaleEvents');
+    const storedDoctorEvents = localStorage.getItem('doctorEvents');
+
+    return {
+      marieCurieEvents: storedMarieCurieEvents ? JSON.parse(storedMarieCurieEvents) : INITIAL_EVENTS,
+      vesaleEvents: storedVesaleEvents ? JSON.parse(storedVesaleEvents) : [],
+      doctorEvents: storedDoctorEvents ? JSON.parse(storedDoctorEvents) : []
+    };
+  };
+
+  const getDefaultResourceId = () => {
+    switch (calendar) {
+      case 'vesale':
+        return 'Matin-vesale';
+      case 'doctors':
+        return 'Matin-doctor';
+      default:
+        return 'Matin';
+    }
+  };
+
+  const getParentResourceId = (resourceId) => {
+    const resources = getResources();
+    const resource = resources.find(r => r.id === resourceId);
+    return resource?.parentId;
+  };
+
 
   const [viewModel, setViewModel] = useState(null);
   const [refreshKey, setRefreshKey] = useState(0);
   const [containerHeight, setContainerHeight] = useState(0);
-  const [events, setEvents] = useState(INITIAL_EVENTS);
-  const [resources] = useState(RESOURCES);
+  const [marieCurieEvents, setMarieCurieEvents] = useState(() => initializeEvents().marieCurieEvents);
+  const [vesaleEvents, setVesaleEvents] = useState(() => initializeEvents().vesaleEvents);
+  const [doctorEvents, setDoctorEvents] = useState(() => initializeEvents().doctorEvents);
   const [showNewEventDialog, setShowNewEventDialog] = useState(false);
   const [showViewEventDialog, setShowViewEventDialog] = useState(false);
   const [showEditEventDialog, setShowEditEventDialog] = useState(false);
   const [selectedEvent, setSelectedEvent] = useState(null);
+  const [showConfirmDialog, setShowConfirmDialog] = useState(false);
+  const [confirmAction, setConfirmAction] = useState(null);
+  const [confirmMessage, setConfirmMessage] = useState('');
   const [newEventData, setNewEventData] = useState({
     title: '',
     start: '',
     end: '',
-    resourceId: 'Matin',
+    resourceId: getDefaultResourceId(),
     bgColor: '#3B82F6',
     name: '',
     movable: true,
@@ -223,30 +505,43 @@ const CalendarView = () => {
   });
 
   useEffect(() => {
-    const updateDimensions = () => {
-      const windowHeight = window.innerHeight;
-      const headerHeight = 64;
-      const availableHeight = windowHeight - headerHeight - 96;
-      setContainerHeight(Math.max(400, availableHeight));
-    };
-
-    updateDimensions();
-    window.addEventListener('resize', updateDimensions);
-    initializeScheduler();
-
-    return () => window.removeEventListener('resize', updateDimensions);
-  }, []);
+    localStorage.setItem('marieCurieEvents', JSON.stringify(marieCurieEvents));
+  }, [marieCurieEvents]);
 
   useEffect(() => {
-    if (viewModel) {
-      viewModel.setEvents(events);
-      viewModel.setResources(resources);
-      setViewModel(viewModel);
-      setRefreshKey(prev => prev + 1);
-    }
-  }, [events, resources]);
+    localStorage.setItem('vesaleEvents', JSON.stringify(vesaleEvents));
+  }, [vesaleEvents]);
 
-  const initializeScheduler = () => {
+  useEffect(() => {
+    localStorage.setItem('doctorEvents', JSON.stringify(doctorEvents));
+  }, [doctorEvents]);
+
+  const getCurrentEventsAndSetter = () => {
+    switch (calendar) {
+      case 'vesale':
+        return [vesaleEvents, setVesaleEvents];
+      case 'doctors':
+        return [doctorEvents, setDoctorEvents];
+      default:
+        return [marieCurieEvents, setMarieCurieEvents];
+    }
+  };
+
+  const getResources = () => {
+    switch (calendar) {
+      case 'vesale':
+        return VESALE_RESOURCES;
+      case 'doctors':
+        return DOCTOR_RESOURCES;
+      default:
+        return MARIE_CURIE_RESOURCES;
+    }
+  };
+
+  useEffect(() => {
+    const [currentEvents] = getCurrentEventsAndSetter();
+    const currentResources = getResources();
+    
     const schedulerData = new SchedulerData(
       dayjs().format('YYYY-MM-DD'), 
       ViewType.Week,
@@ -255,8 +550,8 @@ const CalendarView = () => {
       {
         schedulerWidth: '85%',
         resourceTableWidth: 150,
-        eventItemHeight: 30,
-        eventItemLineHeight: 36,
+        eventItemHeight: 20,
+        eventItemLineHeight: 24,
         monthMaxEvents: 99,
         weekMaxEvents: 99,
         movable: true,
@@ -275,68 +570,99 @@ const CalendarView = () => {
     );
 
     schedulerData.localeMoment = dayjs;
-    schedulerData.setResources(resources);
-    schedulerData.setEvents(events);
-    setViewModel(schedulerData);
-  };
-
-  const ColorPicker = ({ value = '#3B82F6', onChange }) => (
-    <div className="flex flex-wrap gap-2 mt-2">
-      {DEFAULT_COLORS.map((color) => (
-        <button
-          key={color}
-          onClick={() => onChange(color)}
-          className={`w-8 h-8 rounded-full border-2 ${
-            value === color ? 'border-gray-900' : 'border-transparent'
-          }`}
-          style={{ backgroundColor: color }}
-          aria-label={`Select color ${color}`}
-        />
-      ))}
-    </div>
-  );
-
-  const toggleResourceCollapse = (schedulerData, item) => {
-    schedulerData.toggleExpandStatus(item);
+    schedulerData.setResources(currentResources);
+    schedulerData.setEvents(currentEvents);
     setViewModel(schedulerData);
     setRefreshKey(prev => prev + 1);
-  };
+  }, [calendar, marieCurieEvents, vesaleEvents, doctorEvents]);
 
-  const prevClick = (schedulerData) => {
-    schedulerData.prev();
-    schedulerData.setEvents(events);
-    schedulerData.setResources(resources);
-    setViewModel(schedulerData);
-    setRefreshKey(prev => prev + 1);
-  };
+  
 
-  const nextClick = (schedulerData) => {
-    schedulerData.next();
-    schedulerData.setEvents(events);
-    schedulerData.setResources(resources);
-    setViewModel(schedulerData);
-    setRefreshKey(prev => prev + 1);
-  };
+  // Update newEventData resourceId when calendar changes
+  useEffect(() => {
+    setNewEventData(prev => ({
+      ...prev,
+      resourceId: getDefaultResourceId()
+    }));
+  }, [calendar]);
 
-  const onViewChange = (schedulerData, view) => {
-    schedulerData.setViewType(view.viewType);
-    schedulerData.setEvents(events);
-    schedulerData.setResources(resources);
-    setViewModel(schedulerData);
-    setRefreshKey(prev => prev + 1);
-  };
+  useEffect(() => {
+    const updateDimensions = () => {
+      const windowHeight = window.innerHeight;
+      const headerHeight = 64;
+      const availableHeight = windowHeight - headerHeight - 96;
+      setContainerHeight(Math.max(400, availableHeight));
+    };
 
-  const onSelectDate = (schedulerData, date) => {
-    schedulerData.setDate(date);
-    schedulerData.setEvents(events);
-    schedulerData.setResources(resources);
-    setViewModel(schedulerData);
-    setRefreshKey(prev => prev + 1);
-  };
+    updateDimensions();
+    window.addEventListener('resize', updateDimensions);
+    return () => window.removeEventListener('resize', updateDimensions);
+  }, []);
 
-  const [showConfirmDialog, setShowConfirmDialog] = useState(false);
-  const [confirmAction, setConfirmAction] = useState(null);
-  const [confirmMessage, setConfirmMessage] = useState('');
+  useEffect(() => {
+    const style = document.createElement('style');
+    
+    style.textContent = `
+    
+      /* Marie-Curie styles */
+      td[data-resource-id="UC"] .slot-text,
+      td[data-resource-id="Matin"] .slot-text,
+      td[data-resource-id="PM"] .slot-text {
+        color: #F97316 !important;
+      }
+
+      td[data-resource-id="C2"] .slot-text,
+      td[data-resource-id^="Cardio"] .slot-text,
+      td[data-resource-id^="MG"] .slot-text {
+        color: #3B82F6 !important;
+      }
+
+      td[data-resource-id^="Post-Gradues"] .slot-text {
+        color: #EF4444 !important;
+      }
+
+      /* Vesale styles */
+      td[data-resource-id="UC-vesale"] .slot-text,
+      td[data-resource-id="Matin-vesale"] .slot-text,
+      td[data-resource-id="PM-vesale"] .slot-text {
+        color: #F97316 !important;
+      }
+
+      td[data-resource-id="C2-vesale"] .slot-text,
+      td[data-resource-id^="Cardio-vesale"] .slot-text,
+      td[data-resource-id^="MG-vesale"] .slot-text {
+        color: #3B82F6 !important;
+      }
+
+      td[data-resource-id^="Post-Gradues-vesale"] .slot-text {
+        color: #EF4444 !important;
+      }
+
+      /* Doctor styles */
+      td[data-resource-id="IC-doctor"] .slot-text,
+      td[data-resource-id="Matin-doctor"] .slot-text,
+      td[data-resource-id="PM-doctor"] .slot-text {
+        color: #F97316 !important;
+      }
+
+      td[data-resource-id="AA-doctor"] .slot-text,
+      td[data-resource-id="AA-Matin-doctor"] .slot-text,
+      td[data-resource-id="AA-PM-doctor"] .slot-text {
+        color: #3B82F6 !important;
+      }
+
+      td[data-resource-id^="Post-Gradues-doctor"] .slot-text {
+        color: #EF4444 !important;
+      }
+
+      /* Make sure icons change color */
+      td .anticon svg {
+        fill: currentColor !important;
+      }
+    `;
+    document.head.appendChild(style);
+    return () => document.head.removeChild(style);
+  }, [calendar]);
 
   const handleConfirmAction = () => {
     if (confirmAction) {
@@ -345,10 +671,53 @@ const CalendarView = () => {
     setShowConfirmDialog(false);
   };
 
+  const toggleResourceCollapse = (schedulerData, item) => {
+    schedulerData.toggleExpandStatus(item);
+    setViewModel(schedulerData);
+    setRefreshKey(prev => prev + 1);
+  };
+
+  const prevClick = (schedulerData) => {
+    const [currentEvents] = getCurrentEventsAndSetter();
+    schedulerData.prev();
+    schedulerData.setEvents(currentEvents);
+    schedulerData.setResources(getResources());
+    setViewModel(schedulerData);
+    setRefreshKey(prev => prev + 1);
+  };
+
+  const nextClick = (schedulerData) => {
+    const [currentEvents] = getCurrentEventsAndSetter();
+    schedulerData.next();
+    schedulerData.setEvents(currentEvents);
+    schedulerData.setResources(getResources());
+    setViewModel(schedulerData);
+    setRefreshKey(prev => prev + 1);
+  };
+
+  const onViewChange = (schedulerData, view) => {
+    const [currentEvents] = getCurrentEventsAndSetter();
+    schedulerData.setViewType(view.viewType);
+    schedulerData.setEvents(currentEvents);
+    schedulerData.setResources(getResources());
+    setViewModel(schedulerData);
+    setRefreshKey(prev => prev + 1);
+  };
+
+  const onSelectDate = (schedulerData, date) => {
+    const [currentEvents] = getCurrentEventsAndSetter();
+    schedulerData.setDate(date);
+    schedulerData.setEvents(currentEvents);
+    schedulerData.setResources(getResources());
+    setViewModel(schedulerData);
+    setRefreshKey(prev => prev + 1);
+  };
+
   const updateEventStart = (schedulerData, event, newStart) => {
     setConfirmMessage(`Update the start time for "${event.title}" to ${dayjs(newStart).format('MMM D, YYYY h:mm A')}?`);
     setConfirmAction(() => () => {
-      const updatedEvents = events.map(e => {
+      const [currentEvents, setCurrentEvents] = getCurrentEventsAndSetter();
+      const updatedEvents = currentEvents.map(e => {
         if (e.id === event.id) {
           return {
             ...e,
@@ -358,10 +727,10 @@ const CalendarView = () => {
         return e;
       });
       
-      setEvents(updatedEvents);
+      setCurrentEvents(updatedEvents);
       schedulerData.updateEventStart(event, newStart);
       schedulerData.setEvents(updatedEvents);
-      schedulerData.setResources(resources);
+      schedulerData.setResources(getResources());
       setViewModel(schedulerData);
       setRefreshKey(prev => prev + 1);
     });
@@ -371,7 +740,8 @@ const CalendarView = () => {
   const updateEventEnd = (schedulerData, event, newEnd) => {
     setConfirmMessage(`Update the end time for "${event.title}" to ${dayjs(newEnd).format('MMM D, YYYY h:mm A')}?`);
     setConfirmAction(() => () => {
-      const updatedEvents = events.map(e => {
+      const [currentEvents, setCurrentEvents] = getCurrentEventsAndSetter();
+      const updatedEvents = currentEvents.map(e => {
         if (e.id === event.id) {
           return {
             ...e,
@@ -381,10 +751,10 @@ const CalendarView = () => {
         return e;
       });
       
-      setEvents(updatedEvents);
+      setCurrentEvents(updatedEvents);
       schedulerData.updateEventEnd(event, newEnd);
       schedulerData.setEvents(updatedEvents);
-      schedulerData.setResources(resources);
+      schedulerData.setResources(getResources());
       setViewModel(schedulerData);
       setRefreshKey(prev => prev + 1);
     });
@@ -392,13 +762,15 @@ const CalendarView = () => {
   };
 
   const moveEvent = (schedulerData, event, slotId, slotName, start, end) => {
+    const resources = getResources();
     const targetResource = resources.find(r => r.id === slotId)?.name;
     setConfirmMessage(
       `Move "${event.title}" to ${targetResource}?\n` +
       `New time: ${dayjs(start).format('MMM D, YYYY h:mm A')} - ${dayjs(end).format('MMM D, YYYY h:mm A')}`
     );
     setConfirmAction(() => () => {
-      const updatedEvents = events.map(e => {
+      const [currentEvents, setCurrentEvents] = getCurrentEventsAndSetter();
+      const updatedEvents = currentEvents.map(e => {
         if (e.id === event.id) {
           return {
             ...e,
@@ -410,7 +782,7 @@ const CalendarView = () => {
         return e;
       });
       
-      setEvents(updatedEvents);
+      setCurrentEvents(updatedEvents);
       schedulerData.moveEvent(event, slotId, slotName, start, end);
       schedulerData.setEvents(updatedEvents);
       schedulerData.setResources(resources);
@@ -432,7 +804,8 @@ const CalendarView = () => {
 
   const handleUpdateEvent = () => {
     if (!selectedEvent.title || !selectedEvent.name) return;
-    setEvents(prevEvents => 
+    const [_, setCurrentEvents] = getCurrentEventsAndSetter();
+    setCurrentEvents(prevEvents => 
       prevEvents.map(event => 
         event.id === selectedEvent.id ? selectedEvent : event
       )
@@ -441,7 +814,10 @@ const CalendarView = () => {
   };
 
   const handleDeleteEvent = () => {
-    setEvents(prevEvents => prevEvents.filter(event => event.id !== selectedEvent.id));
+    const [_, setCurrentEvents] = getCurrentEventsAndSetter();
+    setCurrentEvents(prevEvents => 
+      prevEvents.filter(event => event.id !== selectedEvent.id)
+    );
     setShowEditEventDialog(false);
   };
 
@@ -461,14 +837,15 @@ const CalendarView = () => {
 
   const createNewEvent = () => {
     if (!newEventData.title || !newEventData.name) return;
+    const [currentEvents, setCurrentEvents] = getCurrentEventsAndSetter();
 
     const newEvent = {
-      id: events.length + 1,
+      id: currentEvents.length + 1,
       ...newEventData,
       showPopover: true
     };
 
-    setEvents(prevEvents => [...prevEvents, newEvent]);
+    setCurrentEvents(prevEvents => [...prevEvents, newEvent]);
     setShowNewEventDialog(false);
     setNewEventData({
       title: '',
@@ -492,7 +869,7 @@ const CalendarView = () => {
 
   return (
     <div>
-      <div key={refreshKey} className="bg-white rounded-lg overflow-auto" style={{ height: containerHeight }}>
+      <div key={refreshKey} className="bg-white rounded-lg overflow-auto" style={{ height: 'calc(100vh - 96px)' }}>
         <DndProvider backend={HTML5Backend}>
           <Scheduler
             schedulerData={viewModel}
@@ -541,7 +918,7 @@ const CalendarView = () => {
               <div>
                 <label className="block text-sm font-medium text-gray-700">Resource</label>
                 <p className="mt-1 p-2 bg-gray-50 rounded-lg">
-                  {resources.find(r => r.id === selectedEvent.resourceId)?.name}
+                  {getResources().find(r => r.id === selectedEvent.resourceId)?.name}
                 </p>
               </div>
 
@@ -619,7 +996,7 @@ const CalendarView = () => {
                 <select 
                   value={selectedEvent.resourceId}
                   onChange={(e) => {
-                    const resource = resources.find(r => r.id === e.target.value);
+                    const resource = getResources().find(r => r.id === e.target.value);
                     const parentColor = resource?.parentId === 'UC' ? '#3B82F6' : '#F59E0B';
                     setSelectedEvent({
                       ...selectedEvent,
@@ -629,7 +1006,7 @@ const CalendarView = () => {
                   }}
                   className="w-full p-2 border rounded-lg"
                 >
-                  {resources.filter(r => !r.groupOnly).map(resource => (
+                  {getResources().filter(r => !r.groupOnly).map(resource => (
                     <option key={resource.id} value={resource.id}>
                       {resource.name}
                     </option>
@@ -754,7 +1131,7 @@ const CalendarView = () => {
                 <select 
                   value={newEventData.resourceId}
                   onChange={(e) => {
-                    const resource = resources.find(r => r.id === e.target.value);
+                    const resource = getResources().find(r => r.id === e.target.value);
                     const parentColor = resource?.parentId === 'UC' ? '#3B82F6' : '#F59E0B';
                     setNewEventData({
                       ...newEventData, 
@@ -764,7 +1141,7 @@ const CalendarView = () => {
                   }}
                   className="w-full p-2 border rounded-lg"
                 >
-                  {resources.filter(r => !r.groupOnly).map(resource => (
+                  {getResources().filter(r => !r.groupOnly).map(resource => (
                     <option key={resource.id} value={resource.id}>
                       {resource.name}
                     </option>

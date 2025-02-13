@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { Menu, X, Calendar, Home, Settings, Users, HelpCircle, Clock } from 'lucide-react';
 import CalendarView from './CalendarView';
+import CongesForm from './CongesForm';
 
 const DashboardLayout = () => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
-  const [currentView, setCurrentView] = useState('calendar');
+  const [currentView, setCurrentView] = useState('Notifications');
   const [isMobile, setIsMobile] = useState(window.innerWidth < 1024);
 
   useEffect(() => {
@@ -19,24 +20,37 @@ const DashboardLayout = () => {
   }, []);
 
   const navigationItems = [
-    { name: 'Home', icon: <Home className="w-5 h-5" />, view: 'dashboard' },
-    { name: 'Calendar', icon: <Calendar className="w-5 h-5" />, view: 'calendar' },
-    { name: 'Time-Off', icon: <Clock className="w-5 h-5" />, view: 'time-off' },
-    { name: 'Users', icon: <Users className="w-5 h-5" />, view: 'users' },
-    { name: 'Settings', icon: <Settings className="w-5 h-5" />, view: 'settings' },
-    { name: 'Help', icon: <HelpCircle className="w-5 h-5" />, view: 'help' }
+    { name: 'Notifications', icon: <Home className="w-5 h-5" />, view: 'Notifications' },
+    { name: 'Calendrier Marie-Curie', icon: <Calendar className="w-5 h-5" />, view: 'Calendrier Marie-Curie' },
+    { name: 'Calendrier Vésale', icon: <Calendar className="w-5 h-5" />, view: 'Calendrier Vésale' },
+    { name: 'Vue Docteurs', icon: <Calendar className="w-5 h-5" />, view: 'Vue Docteurs' },
+    { name: 'Congés', icon: <Clock className="w-5 h-5" />, view: 'Congés' },
+    { name: 'Utilisateurs', icon: <Users className="w-5 h-5" />, view: 'users' },
+    { name: 'Paramètres', icon: <Settings className="w-5 h-5" />, view: 'settings' },
+    { name: 'Aide', icon: <HelpCircle className="w-5 h-5" />, view: 'help' }
   ];
 
   const renderContent = () => {
     switch(currentView) {
-      case 'calendar':
-        return <CalendarView />;
-      case 'dashboard':
+      case 'Calendrier Marie-Curie':
+        return <CalendarView calendar="marie-curie" />;
+      case 'Calendrier Vésale':
+        return <CalendarView calendar="vesale" />;
+      case 'Vue Docteurs':
+        return <CalendarView calendar="doctors" />;
+      case 'Notifications':
         return (
           <div className="bg-white rounded-lg shadow p-6">
-            <p className="text-gray-600">Welcome to your dashboard!</p>
+            <p className="text-gray-600">Dr Chouchane en congé du 20/2/25 au 20/6/25</p>
           </div>
         );
+        case 'Congés':
+          return (
+            <div className="space-y-6">
+              <CongesForm />
+              {/* You can add a list of existing congés requests here */}
+            </div>
+          );
       default:
         return (
           <div className="bg-white rounded-lg shadow p-6">
