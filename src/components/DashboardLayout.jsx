@@ -21,8 +21,8 @@ const DashboardLayout = () => {
 
   const navigationItems = [
     { name: 'Notifications', icon: <Home className="w-5 h-5" />, view: 'Notifications' },
-    { name: 'Calendrier Marie-Curie', icon: <Calendar className="w-5 h-5" />, view: 'Calendrier Marie-Curie' },
-    { name: 'Calendrier Vésale', icon: <Calendar className="w-5 h-5" />, view: 'Calendrier Vésale' },
+    { name: 'Non invasif', icon: <Calendar className="w-5 h-5" />, view: 'Non invasif' },
+    { name: 'Consultations', icon: <Calendar className="w-5 h-5" />, view: 'Consultations' },
     { name: 'Vue Docteurs', icon: <Calendar className="w-5 h-5" />, view: 'Vue Docteurs' },
     { name: 'Congés', icon: <Clock className="w-5 h-5" />, view: 'Congés' },
     { name: 'Utilisateurs', icon: <Users className="w-5 h-5" />, view: 'users' },
@@ -32,9 +32,9 @@ const DashboardLayout = () => {
 
   const renderContent = () => {
     switch(currentView) {
-      case 'Calendrier Marie-Curie':
+      case 'Non invasif':
         return <CalendarView calendar="marie-curie" />;
-      case 'Calendrier Vésale':
+      case 'Consultations':
         return <CalendarView calendar="vesale" />;
       case 'Vue Docteurs':
         return <CalendarView calendar="doctors" />;
