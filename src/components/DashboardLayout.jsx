@@ -44,13 +44,12 @@ const DashboardLayout = () => {
             <p className="text-gray-600">Dr Chouchane en congé du 20/2/25 au 20/6/25</p>
           </div>
         );
-        case 'Congés':
-          return (
-            <div className="space-y-6">
-              <CongesForm />
-              {/* You can add a list of existing congés requests here */}
-            </div>
-          );
+      case 'Congés':
+        return (
+          <div className="space-y-6">
+            <CongesForm />
+          </div>
+        );
       default:
         return (
           <div className="bg-white rounded-lg shadow p-6">
@@ -85,7 +84,7 @@ const DashboardLayout = () => {
 
   return (
     <div className="h-screen flex flex-col bg-gray-100">
-      <header className="bg-white shadow-md z-30 h-16 flex-none">
+      <header className="bg-white shadow-md z-30 flex-none h-16">
         <div className="flex items-center justify-between px-4 h-full">
           <div className="flex items-center gap-4">
             {isMobile && (
@@ -105,7 +104,7 @@ const DashboardLayout = () => {
         </div>
       </header>
 
-      <div className="flex-1 flex overflow-hidden relative">
+      <div className="flex-1 flex overflow-hidden">
         {isMobile ? (
           <aside
             className={`fixed inset-y-0 left-0 w-64 bg-white shadow-lg z-40 transform transition-transform duration-300 ease-in-out ${
@@ -121,12 +120,12 @@ const DashboardLayout = () => {
           </aside>
         )}
 
-        <main className="flex-1 overflow-hidden">
-          <div className="h-full p-6 lg:p-8">
+        <main className="flex-1 min-w-0">
+          <div className="h-full p-6 lg:p-8 overflow-auto">
             <h1 className="text-2xl font-bold text-gray-900 mb-6">
               {currentView.charAt(0).toUpperCase() + currentView.slice(1)}
             </h1>
-            <div className="h-full">
+            <div className="h-[calc(100%-4rem)]">
               {renderContent()}
             </div>
           </div>

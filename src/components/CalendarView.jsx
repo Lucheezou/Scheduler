@@ -868,26 +868,31 @@ const CalendarView = ({ calendar = 'marie-curie' }) => {
   }
 
   return (
-    <div>
-      <div key={refreshKey} className="bg-white rounded-lg overflow-auto" style={{ height: 'calc(100vh - 96px)' }}>
-        <DndProvider backend={HTML5Backend}>
-          <Scheduler
-            schedulerData={viewModel}
-            prevClick={prevClick}
-            nextClick={nextClick}
-            onSelectDate={onSelectDate}
-            onViewChange={onViewChange}
-            toggleExpandFunc={toggleResourceCollapse}
-            viewEventClick={handleViewEvent}
-            viewEventText="View"
-            viewEvent2Click={handleEditEvent}
-            viewEvent2Text="Edit"
-            newEvent={handleNewEvent}
-            moveEvent={moveEvent}
-            updateEventStart={updateEventStart}
-            updateEventEnd={updateEventEnd}
-          />
-        </DndProvider>
+    <div className="h-full">
+      <div 
+        key={refreshKey} 
+        className="bg-white rounded-lg h-full flex flex-col overflow-auto"
+      >
+        <div className="min-w-[1200px] p-4">
+          <DndProvider backend={HTML5Backend}>
+            <Scheduler
+              schedulerData={viewModel}
+              prevClick={prevClick}
+              nextClick={nextClick}
+              onSelectDate={onSelectDate}
+              onViewChange={onViewChange}
+              toggleExpandFunc={toggleResourceCollapse}
+              viewEventClick={handleViewEvent}
+              viewEventText="View"
+              viewEvent2Click={handleEditEvent}
+              viewEvent2Text="Edit"
+              newEvent={handleNewEvent}
+              moveEvent={moveEvent}
+              updateEventStart={updateEventStart}
+              updateEventEnd={updateEventEnd}
+            />
+          </DndProvider>
+        </div>
       </div>
 
       {/* View Event Dialog */}
